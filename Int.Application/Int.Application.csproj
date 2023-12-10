@@ -29,4 +29,11 @@
 	  <ProjectReference Include="..\Int.Domain\Int.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Features\Label\Constant\" />
+	  <Folder Include="Features\Label\Queries\GetListByDynamic\" />
+	  <Folder Include="Features\Label\Queries\GetList\" />
+	  <Folder Include="Features\Label\Rules\" />
+	</ItemGroup>
+
 </Project>

@@ -15,13 +15,13 @@ public class ProductBusinessRules : BaseBusinessRules
         _productRepository = productRepository;
     }
 
-    public async Task ProductNameCannotBeDuplicatedWhenInserted(string name)
+    public async Task ProductCodeCannotBeDuplicatedWhenInserted(string code)
     {
-        Product? result = await _productRepository.GetAsync(predicate: b => b.Name.ToLower() == name.ToLower());
+        Product? result = await _productRepository.GetAsync(predicate: b => b.Code.ToLower() == code.ToLower());
 
         if (result != null)
         {
-            throw new BusinessException(ProductsMessages.ProductNameExists);
+            throw new BusinessException(ProductsMessages.ProductCodeExists);
         }
     }
 }

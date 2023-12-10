@@ -2,5 +2,5 @@
 
 public class ProductsMessages
 {
-    public const string ProductNameExists = "Product name exists";
+    public const string ProductCodeExists = "Product code already exists!";
 }

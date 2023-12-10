@@ -8,7 +8,19 @@ using MediatR;
 namespace Int.Application.Features.Commands;
 public class CreateProductCommand : IRequest<CreatedProductResponse>, ITransactionalRequest
 {
+    #region [ Model ]
+
+    public string Code { get; set; }
+
     public string Name { get; set; }
+
+    public string Description { get; set; }
+
+    public decimal UnitPrice { get; set; }
+
+    public string? ImageUrl { get; set; }
+
+    #endregion
 
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreatedProductResponse>
     {
@@ -25,11 +37,13 @@ public class CreateProductCommand : IRequest<CreatedProductResponse>, ITransacti
 
         public async Task<CreatedProductResponse>? Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-
-            await _productBusinessRules.ProductNameCannotBeDuplicatedWhenInserted(request.Name);
+            await _productBusinessRules.ProductCodeCannotBeDuplicatedWhenInserted(request.Code);
 
             Product product = _mapper.Map<Product>(request);
             product.Id = Guid.NewGuid();
+
+            if(string.IsNullOrEmpty(product.Code))
+                product.Code = Guid.NewGuid().ToString();
 
             await _productRepository.AddAsync(product);
 

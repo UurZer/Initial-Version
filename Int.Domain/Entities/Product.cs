@@ -4,7 +4,7 @@ namespace Int.Domain.Entities;
 
 public class Product : Entity<Guid>
 {
-    public long CategoryId { get; set; }
+    public Guid LabelId { get; set; }
 
     public string Code { get; set; }
 
@@ -14,6 +14,12 @@ public class Product : Entity<Guid>
 
     public decimal UnitPrice { get; set; }
     
-    public string ImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
+
+    #region [ Navigation Property ]
+
+    public ICollection<Label> Labels { get; set; }
+    
+    #endregion
 
 }

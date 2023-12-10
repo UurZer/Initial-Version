@@ -5,16 +5,34 @@ using WebApi.Controllers;
 
 namespace Int.WepApi.Controllers
 {
-    [Route("api")]
+    [Route("api/")]
     [ApiController]
     public class ProductController : BaseController
     {
-        [Route("/Create/Product")]
+        #region [ POST ]
+
+        [Route("Create/Product")]
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateProductCommand createProductCommand)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand createProductCommand)
         {
             CreatedProductResponse response = await Mediator.Send(createProductCommand);
             return Ok(response);
         }
+
+        #endregion
+
+        #region [ GET ]
+
+        [Route("Product")]
+        [HttpGet]
+        public async Task<IActionResult> GetProductByCode([FromBody] CreateProductCommand createProductCommand)
+        {
+            CreatedProductResponse response = await Mediator.Send(createProductCommand);
+            return Ok(response);
+        }
+
+        #endregion
+
+
     }
 }

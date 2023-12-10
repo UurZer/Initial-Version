@@ -1,10 +1,11 @@
-﻿using Int.Application.Services.Repositories;
-using AutoMapper;
+﻿using AutoMapper;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
+using Int.Application.Services.Repositories;
 using Int.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Int.Application.Features.Queries;
 
@@ -25,16 +26,15 @@ public class GetListProductQuery : IRequest<GetListResponse<GetListProductListIt
 
         public async Task<GetListResponse<GetListProductListItemDto>> Handle(GetListProductQuery request, CancellationToken cancellationToken)
         {
-            Paginate<Product> products = await _productRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken,
-                withDeleted: true
-                );
+            Paginate<Product> models = await _productRepository.GetListAsync(
+                 include: m => m.Include(m => m.Labels),
+                 index: request.PageRequest.PageIndex,
+                 size: request.PageRequest.PageSize
+                 );
 
-            GetListResponse<GetListProductListItemDto> response = _mapper.Map<GetListResponse<GetListProductListItemDto>>(products);
+            var response = _mapper.Map<GetListResponse<GetListProductListItemDto>>(models);
+
             return response;
-
         }
     }
 }

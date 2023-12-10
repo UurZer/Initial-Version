@@ -20,8 +20,11 @@ public class MappingProfiles : Profile
         CreateMap<Product, DeleteProductCommand>().ReverseMap();
         CreateMap<Product, DeletedProductResponse>().ReverseMap();
 
-        CreateMap<Product, GetListProductListItemDto>().ReverseMap();
         CreateMap<Product, GetByIdProductResponse>().ReverseMap();
         CreateMap<Paginate<Product>, GetListResponse<GetListProductListItemDto>>().ReverseMap();
+
+        CreateMap<Product, GetListProductListItemDto>()
+        .ForMember(destinationMember: c => c.LabelName, memberOptions: opt => opt.MapFrom(c => c.Labels.First().Name))
+        .ReverseMap();
     }
 }
