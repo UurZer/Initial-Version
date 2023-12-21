@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Int.Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20231210174434_initv3")]
-    partial class initv3
+    [Migration("20231221193450_Label-Fix")]
+    partial class LabelFix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,7 @@ namespace Int.Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
-                    b.Property<Guid>("ParentLabelId")
+                    b.Property<Guid?>("ParentLabelId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ParentLabelId");
 

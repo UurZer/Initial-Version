@@ -1,6 +1,6 @@
 ﻿namespace Int.Application.Features.Queries;
 
-public class GetListProductListItemDto
+public class GetListLabelListItemDto
 {
     public Guid Id { get; set; }
 
@@ -10,9 +10,9 @@ public class GetListProductListItemDto
 
     public string LabelUType { get; set; }
 
-    public string LabelName { get; set; }
+    public int Level { get; set; }
 
-    public decimal UnitPrice { get; set; }
+    public Guid? ParentLabelId { get; set; } 
 
-    public string ImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
 }

@@ -14,7 +14,8 @@ public static class PersistenceServiceRegistration
         services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("InitialDb")));
 
         services.AddScoped<IProductRepository, ProductRepository>();
-        
+        services.AddScoped<ILabelRepository, LabelRepository>();
+
         return services;
     }
 }

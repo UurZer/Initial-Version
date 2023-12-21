@@ -7,14 +7,14 @@ using Int.Domain.Entities;
 
 namespace Int.Application.Features.Profiles;
 
-public class MappingProfiles : Profile
+public class ProductMappingProfiles : Profile
 {
-    public MappingProfiles()
+    public ProductMappingProfiles()
     {
         CreateMap<Product, CreateProductCommand>().ReverseMap();
         CreateMap<Product, CreatedProductResponse>().ReverseMap();
 
-        CreateMap<Product, UpdateProductCommand>().ReverseMap();
+        CreateMap<Product, UpdateLabelCommand>().ReverseMap();
         CreateMap<Product, UpdatedProductResponse>().ReverseMap();
 
         CreateMap<Product, DeleteProductCommand>().ReverseMap();

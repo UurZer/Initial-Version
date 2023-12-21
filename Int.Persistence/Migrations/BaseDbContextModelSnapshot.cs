@@ -65,7 +65,7 @@ namespace Int.Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
-                    b.Property<Guid>("ParentLabelId")
+                    b.Property<Guid?>("ParentLabelId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ParentLabelId");
 
