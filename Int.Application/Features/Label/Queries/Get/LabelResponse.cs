@@ -1,4 +1,6 @@
-﻿namespace Int.Application.Features.Queries;
+﻿using Int.Domain.Entities;
+
+namespace Int.Application.Features.Queries;
 
 public class LabelResponse
 {
@@ -15,4 +17,6 @@ public class LabelResponse
     public string? ParentLabelCode { get; set; }
 
     public string? ImageUrl { get; set; }
+
+    public Label ParentLabel { get; set; }
 }

@@ -26,11 +26,17 @@ namespace Int.WepApi.Controllers
 
         #region [ GET ]
 
-        [Route("Label")]
+        [Route("Label/{ParentId}/{Id}")]
         [HttpGet]
-        public async Task<IActionResult> GetLabelByCode([FromBody] CreateLabelCommand createLabelCommand)
+        public async Task<IActionResult> GetLabelByIds(Guid parentId, Guid id)
         {
-            CreatedLabelResponse response = await Mediator.Send(createLabelCommand);
+            GetLabelById getLabelByCode = new() 
+            { 
+                ParentId = parentId, 
+                Id = id
+            };
+
+            LabelResponse response = await Mediator.Send(getLabelByCode);
             return Ok(response);
         }
 
@@ -38,7 +44,12 @@ namespace Int.WepApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllLabelByLevel([FromBody] PageRequest pageRequest, string labelUType, int level)
         {
-            GetListLabelQuery getByIdLabelQuery = new() { PageRequest = pageRequest, LabelUType = labelUType, Level = level};
+            GetListLabelQuery getByIdLabelQuery = new()
+            {
+                PageRequest = pageRequest,
+                LabelUType = labelUType,
+                Level = level
+            };
 
             GetListResponse<GetListLabelListItemDto> response = await Mediator.Send(getByIdLabelQuery);
             return Ok(response);
