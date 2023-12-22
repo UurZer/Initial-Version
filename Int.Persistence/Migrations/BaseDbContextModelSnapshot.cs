@@ -121,7 +121,6 @@ namespace Int.Persistence.Migrations
                         .HasColumnName("ImageUrl");
 
                     b.Property<string>("LabelCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("LabelId")
