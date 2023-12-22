@@ -20,30 +20,45 @@ public class CreateProductCommand : IRequest<CreatedProductResponse>, ITransacti
 
     public string? ImageUrl { get; set; }
 
+    public string? LabelId { get; set; }
+
+    public string LabelCode { get; set; }
+
     #endregion
 
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreatedProductResponse>
     {
         private readonly IProductRepository _productRepository;
+        private readonly ILabelRepository _labelRepository;
         private readonly IMapper _mapper;
         private readonly ProductBusinessRules _productBusinessRules;
 
-        public CreateProductCommandHandler(IProductRepository productRepository, IMapper mapper, ProductBusinessRules productBusinessRules)
+        public CreateProductCommandHandler(IProductRepository productRepository, ILabelRepository labelRepository, IMapper mapper, ProductBusinessRules productBusinessRules)
         {
             _productRepository = productRepository;
-            _mapper = mapper;
+            _labelRepository = labelRepository;
             _productBusinessRules = productBusinessRules;
+            _mapper = mapper;
         }
 
         public async Task<CreatedProductResponse>? Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            await _productBusinessRules.ProductCodeCannotBeDuplicatedWhenInserted(request.Code);
+            Guid labelId;
+
+            await _productBusinessRules.ProductCodeCannotBeDuplicatedWhenInserted(request.Code, request.LabelCode);
 
             Product product = _mapper.Map<Product>(request);
             product.Id = Guid.NewGuid();
 
-            if(string.IsNullOrEmpty(product.Code))
+
+            if (string.IsNullOrEmpty(product.Code))
                 product.Code = Guid.NewGuid().ToString();
+
+            if (!string.IsNullOrEmpty(product.LabelCode))
+            {
+                labelId = _labelRepository.GetAsync(x => x.Code == product.LabelCode).Result.Id;
+                product.LabelId = labelId;
+            }
 
             await _productRepository.AddAsync(product);
 

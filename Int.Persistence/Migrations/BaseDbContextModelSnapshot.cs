@@ -65,6 +65,9 @@ namespace Int.Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
+                    b.Property<string>("ParentLabelCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("ParentLabelId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ParentLabelId");
@@ -77,6 +80,8 @@ namespace Int.Persistence.Migrations
                         .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentLabelId");
 
                     b.HasIndex("ProductId");
 
@@ -95,7 +100,7 @@ namespace Int.Persistence.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Code");
 
                     b.Property<DateTime>("CreatedDate")
@@ -115,8 +120,13 @@ namespace Int.Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ImageUrl");
 
+                    b.Property<string>("LabelCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("LabelId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LabelId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -133,17 +143,20 @@ namespace Int.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Code" }, "UK_Products_Code")
-                        .IsUnique();
-
                     b.ToTable("Product", "Int");
                 });
 
             modelBuilder.Entity("Int.Domain.Entities.Label", b =>
                 {
+                    b.HasOne("Int.Domain.Entities.Label", "ParentLabel")
+                        .WithMany()
+                        .HasForeignKey("ParentLabelId");
+
                     b.HasOne("Int.Domain.Entities.Product", null)
                         .WithMany("Labels")
                         .HasForeignKey("ProductId");
+
+                    b.Navigation("ParentLabel");
                 });
 
             modelBuilder.Entity("Int.Domain.Entities.Product", b =>

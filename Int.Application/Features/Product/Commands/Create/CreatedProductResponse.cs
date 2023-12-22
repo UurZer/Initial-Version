@@ -14,5 +14,9 @@ public class CreatedProductResponse
 
     public string? ImageUrl { get; set; }
 
+    public string LabelId { get; set; }
+
+    public string LabelCode { get; set; }
+
     public DateTime CreatedDate { get; set; }
 }

@@ -6,6 +6,8 @@ public class Product : Entity<Guid>
 {
     public Guid LabelId { get; set; }
 
+    public string LabelCode { get; set; }
+
     public string Code { get; set; }
 
     public string Name { get; set; }

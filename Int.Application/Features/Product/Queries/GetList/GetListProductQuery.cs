@@ -13,6 +13,8 @@ public class GetListProductQuery : IRequest<GetListResponse<GetListProductListIt
 {
     public PageRequest PageRequest { get; set; }
 
+    public Guid LabelId { get; set; }
+
     public class GetListProductQueryHandler : IRequestHandler<GetListProductQuery, GetListResponse<GetListProductListItemDto>>
     {
         private readonly IProductRepository _productRepository;
@@ -26,13 +28,14 @@ public class GetListProductQuery : IRequest<GetListResponse<GetListProductListIt
 
         public async Task<GetListResponse<GetListProductListItemDto>> Handle(GetListProductQuery request, CancellationToken cancellationToken)
         {
-            Paginate<Product> models = await _productRepository.GetListAsync(
+            Paginate<Product> products = await _productRepository.GetListAsync(
+                 x => x.LabelId == request.LabelId,
                  include: m => m.Include(m => m.Labels),
                  index: request.PageRequest.PageIndex,
                  size: request.PageRequest.PageSize
                  );
 
-            var response = _mapper.Map<GetListResponse<GetListProductListItemDto>>(models);
+            var response = _mapper.Map<GetListResponse<GetListProductListItemDto>>(products);
 
             return response;
         }

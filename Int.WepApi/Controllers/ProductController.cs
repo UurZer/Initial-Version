@@ -1,4 +1,7 @@
-﻿using Int.Application.Features.Commands;
+﻿using Core.Application.Requests;
+using Core.Application.Responses;
+using Int.Application.Features.Commands;
+using Int.Application.Features.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers;
@@ -23,11 +26,14 @@ namespace Int.WepApi.Controllers
 
         #region [ GET ]
 
-        [Route("Product")]
+        [Route("Products/{LabelId}")]
         [HttpGet]
-        public async Task<IActionResult> GetProductByCode([FromBody] CreateProductCommand createProductCommand)
+        public async Task<IActionResult> GetAllProductsByLabel([FromBody] PageRequest pageRequest, Guid labelId)
         {
-            CreatedProductResponse response = await Mediator.Send(createProductCommand);
+            GetListProductQuery getListProductQuery = new() { PageRequest = pageRequest, LabelId = labelId };
+
+            GetListResponse<GetListProductListItemDto> response = await Mediator.Send(getListProductQuery);
+
             return Ok(response);
         }
 

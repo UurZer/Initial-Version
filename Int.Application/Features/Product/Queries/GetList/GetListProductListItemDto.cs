@@ -1,4 +1,6 @@
-﻿namespace Int.Application.Features.Queries;
+﻿using Int.Domain.Entities;
+
+namespace Int.Application.Features.Queries;
 
 public class GetListProductListItemDto
 {
@@ -10,9 +12,14 @@ public class GetListProductListItemDto
 
     public string LabelUType { get; set; }
 
-    public string LabelName { get; set; }
-
     public decimal UnitPrice { get; set; }
 
     public string ImageUrl { get; set; }
+
+
+    #region [ Navigation Property ]
+
+    public List<Label> Labels { get; set; }
+
+    #endregion
 }

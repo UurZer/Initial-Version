@@ -8,7 +8,10 @@ namespace Int.Application.Features.Commands;
 public class UpdateProductCommand : IRequest<UpdatedProductResponse>
 {
     public Guid Id { get; set; }
+
     public string Name { get; set; }
+
+    public string LabelCode { get; set; }
 
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, UpdatedProductResponse>
     {

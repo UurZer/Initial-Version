@@ -15,9 +15,9 @@ public class ProductBusinessRules : BaseBusinessRules
         _productRepository = productRepository;
     }
 
-    public async Task ProductCodeCannotBeDuplicatedWhenInserted(string code)
+    public async Task ProductCodeCannotBeDuplicatedWhenInserted(string code, string labelCode)
     {
-        Product? result = await _productRepository.GetAsync(predicate: b => b.Code.ToLower() == code.ToLower());
+        Product? result = await _productRepository.GetAsync(predicate: x => x.Code.ToLower() == code.ToLower() && x.LabelCode == labelCode);
 
         if (result != null)
         {
