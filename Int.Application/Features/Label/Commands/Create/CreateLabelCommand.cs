@@ -22,6 +22,8 @@ public class CreateLabelCommand : IRequest<CreatedLabelResponse>, ITransactional
 
     public Guid? ParentLabelId { get; set; }
 
+    public string? ParentLabelCode { get; set; }
+
     public string? ImageUrl { get; set; }
 
     #endregion
@@ -44,10 +46,18 @@ public class CreateLabelCommand : IRequest<CreatedLabelResponse>, ITransactional
             await _labelBusinessRules.LabelCodeCannotBeDuplicatedWhenInserted(request.Code);
 
             Label label = _mapper.Map<Label>(request);
+            Guid parentLabelId;
+
             label.Id = Guid.NewGuid();
 
             if(string.IsNullOrEmpty(label.Code))
                 label.Code = Guid.NewGuid().ToString();
+
+            if (!string.IsNullOrEmpty(label.ParentLabelCode))
+            {
+                parentLabelId = _labelRepository.GetAsync(x => x.Code == label.ParentLabelCode).Result.Id;
+                label.ParentLabelId = parentLabelId;
+            }
 
             await _labelRepository.AddAsync(label);
 

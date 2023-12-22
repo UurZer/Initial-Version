@@ -13,6 +13,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(b => b.Id).HasColumnName("Id").IsRequired();
         builder.Property(b => b.Code).HasColumnName("Code").IsRequired();
         builder.Property(b => b.Name).HasColumnName("Name").IsRequired();
+        builder.Property(b => b.LabelId).HasColumnName("LabelId").IsRequired();
         builder.Property(b => b.Description).HasColumnName("Description").IsRequired();
         builder.Property(b => b.UnitPrice).HasColumnName("UnitPrice").IsRequired();
         builder.Property(b => b.CreatedDate).HasColumnName("CreatedDate").IsRequired();
@@ -20,8 +21,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(b => b.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(b => b.DeletedDate).HasColumnName("DeletedDate");
 
-        builder.HasIndex(indexExpression: b => b.Code, name: "UK_Products_Code").IsUnique();
 
+        builder.HasMany(b => b.Labels);
         builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
     }
 }

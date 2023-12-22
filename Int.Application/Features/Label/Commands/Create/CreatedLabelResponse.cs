@@ -14,5 +14,7 @@ public class CreatedLabelResponse
 
     public Guid? ParentLabelId { get; set; }
 
+    public string? ParentLabelCode { get; set; }
+
     public string? ImageUrl { get; set; }
 }

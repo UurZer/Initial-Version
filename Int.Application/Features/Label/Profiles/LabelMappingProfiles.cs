@@ -19,5 +19,14 @@ public class LabelMappingProfiles : Profile
 
         CreateMap<Label, DeleteLabelCommand>().ReverseMap();
         CreateMap<Label, DeletedLabelResponse>().ReverseMap();
+
+        CreateMap<Label, GetListLabelListItemDto>()
+            .ForMember(x => x.LabelId, opt => opt.MapFrom(y => y.Id))
+            .ReverseMap();
+
+        CreateMap<Label, LabelResponse>().ReverseMap();
+
+        CreateMap<Paginate<Label>, GetListResponse<GetListLabelListItemDto>>()
+            .ReverseMap();
     }
 }

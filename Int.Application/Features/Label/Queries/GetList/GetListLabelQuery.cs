@@ -13,6 +13,10 @@ public class GetListLabelQuery : IRequest<GetListResponse<GetListLabelListItemDt
 {
     public PageRequest PageRequest { get; set; }
 
+    public string LabelUType { get; set; }
+
+    public int Level { get; set; }
+
     public class GetListLabelQueryHandler : IRequestHandler<GetListLabelQuery, GetListResponse<GetListLabelListItemDto>>
     {
         private readonly ILabelRepository _productRepository;
@@ -27,11 +31,14 @@ public class GetListLabelQuery : IRequest<GetListResponse<GetListLabelListItemDt
         public async Task<GetListResponse<GetListLabelListItemDto>> Handle(GetListLabelQuery request, CancellationToken cancellationToken)
         {
             Paginate<Label> models = await _productRepository.GetListAsync(
+                 x => x.LabelUType == request.LabelUType && x.Level == request.Level,
                  index: request.PageRequest.PageIndex,
-                 size: request.PageRequest.PageSize
+                 size: request.PageRequest.PageSize,
+                 cancellationToken: cancellationToken,
+                 withDeleted: true
                  );
 
-            var response = _mapper.Map<GetListResponse<GetListLabelListItemDto>>(models);
+            GetListResponse<GetListLabelListItemDto> response = _mapper.Map<GetListResponse<GetListLabelListItemDto>>(models);
 
             return response;
         }

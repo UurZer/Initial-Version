@@ -1,8 +1,12 @@
-﻿namespace Int.Application.Features.Queries;
+﻿using Int.Domain.Entities;
+
+namespace Int.Application.Features.Queries;
 
 public class GetListLabelListItemDto
 {
-    public Guid Id { get; set; }
+    public string LabelId { get; set; }
+
+    public string Code { get; set; }
 
     public string Name { get; set; }
 
@@ -12,7 +16,8 @@ public class GetListLabelListItemDto
 
     public int Level { get; set; }
 
-    public Guid? ParentLabelId { get; set; } 
+    public string? ParentLabelCode { get; set; }
 
     public string? ImageUrl { get; set; }
+
 }
