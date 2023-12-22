@@ -1,5 +1,6 @@
 ﻿using Core.Application.Requests;
 using Core.Application.Responses;
+using Core.Persistence.Dynamic;
 using Int.Application.Features.Commands;
 using Int.Application.Features.Queries;
 using MediatR;
@@ -27,12 +28,23 @@ namespace Int.WepApi.Controllers
         #region [ GET ]
 
         [Route("Products/{LabelId}")]
-        [HttpGet]
-        public async Task<IActionResult> GetAllProductsByLabel([FromBody] PageRequest pageRequest, Guid labelId)
+        [HttpPost]
+        public async Task<IActionResult> GetAllProductsByLabel([FromBody] DynamicQuery dynamicQuery, [FromQuery] PageRequest pageRequest, Guid labelId)
         {
-            GetListProductQuery getListProductQuery = new() { PageRequest = pageRequest, LabelId = labelId };
+            GetListDynamicProductQuery productQuery = new() {  LabelId = labelId, DynamicQuery = dynamicQuery, PageRequest = pageRequest };
 
-            GetListResponse<GetListProductListItemDto> response = await Mediator.Send(getListProductQuery);
+            GetListResponse<GetListProductListItemDto> response = await Mediator.Send(productQuery);
+
+            return Ok(response);
+        }
+
+        [Route("Product/{productId}")]
+        [HttpGet]
+        public async Task<IActionResult> GetProductById(Guid productId)
+        {
+            GetByIdProductQuery productQuery = new() { Id = productId };
+
+            GetByIdProductResponse response = await Mediator.Send(productQuery);
 
             return Ok(response);
         }

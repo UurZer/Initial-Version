@@ -15,11 +15,4 @@ public class GetListProductListItemDto
     public decimal UnitPrice { get; set; }
 
     public string ImageUrl { get; set; }
-
-
-    #region [ Navigation Property ]
-
-    public List<Label> Labels { get; set; }
-
-    #endregion
 }

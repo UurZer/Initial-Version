@@ -16,12 +16,11 @@ public class Product : Entity<Guid>
 
     public decimal UnitPrice { get; set; }
     
-    public string? ImageUrl { get; set; }
+    public string ImageUrl { get; set; }
 
     #region [ Navigation Property ]
 
     public ICollection<Label> Labels { get; set; }
     
     #endregion
-
 }
