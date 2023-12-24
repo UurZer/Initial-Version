@@ -2,7 +2,7 @@
 using Core.Application.Responses;
 using Int.Application.Features.Commands;
 using Int.Application.Features.Queries;
-using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers;
 
@@ -10,6 +10,7 @@ namespace Int.WepApi.Controllers
 {
     [Route("api/")]
     [ApiController]
+    [Authorize()]
     public class LabelController : BaseController
     {
         #region [ POST ]
@@ -30,9 +31,9 @@ namespace Int.WepApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetLabelByIds(Guid parentId, Guid id)
         {
-            GetLabelById getLabelByCode = new() 
-            { 
-                ParentId = parentId, 
+            GetLabelById getLabelByCode = new()
+            {
+                ParentId = parentId,
                 Id = id
             };
 
