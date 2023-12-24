@@ -1,6 +1,9 @@
 ﻿using Int.Application.Services.Repositories;
+using Int.Identity.Repository.Service;
+using Int.Identity.Service;
 using Int.Persistence.Contexts;
 using Int.Persistence.Repositories;
+using Int.Utility.Security.JWT;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +18,12 @@ public static class PersistenceServiceRegistration
 
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ILabelRepository, LabelRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthService, AuthService>();
+
+        services.AddScoped<ITokenHelper, JwtHelper>();
         return services;
     }
 }

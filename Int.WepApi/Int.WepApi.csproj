@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.12" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.9">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,6 +28,9 @@
 		</Reference>
 		<Reference Include="Core.CrossCuttingConcerns">
 			<HintPath>..\..\Core.Package\Core.Application\bin\Debug\net7.0\Core.CrossCuttingConcerns.dll</HintPath>
+		</Reference>
+		<Reference Include="Core.Identity">
+		  <HintPath>..\..\Core.Package\Core.Identity\bin\Debug\net7.0\Core.Identity.dll</HintPath>
 		</Reference>
 		<Reference Include="Core.Persistence">
 			<HintPath>..\..\Core.Package\Core.Persistence\bin\Debug\net7.0\Core.Persistence.dll</HintPath>

@@ -5,7 +5,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Int.Application;
+namespace Core.Application;
 
 public static class ApplicationServiceRegistration
 {

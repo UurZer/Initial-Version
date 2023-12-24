@@ -27,6 +27,12 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Int.Domain\Int.Domain.csproj" />
+	  <ProjectReference Include="..\Int.Identity\Int.Identity.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Features\User\Queries\GetList\" />
+	  <Folder Include="Features\User\Queries\Get\" />
 	</ItemGroup>
 
 </Project>
