@@ -15,7 +15,9 @@ public class Product : Entity<Guid>
     public string Description { get; set; }
 
     public decimal UnitPrice { get; set; }
-    
+
+    public decimal StockQuantity { get; set; } = 0;
+
     public string ImageUrl { get; set; }
 
     #region [ Navigation Property ]

@@ -8,18 +8,15 @@ using WebApi.Controllers;
 
 namespace Int.WepApi.Controllers
 {
-    [Route("api/")]
-    [ApiController]
-    [Authorize()]
     public class LabelController : BaseController
     {
         #region [ POST ]
 
         [Route("Create/Label")]
         [HttpPost]
-        public async Task<IActionResult> CreateLabel([FromBody] CreateLabelCommand createLabelCommand)
+        public async Task<IActionResult> CreateLabel([FromBody] CreateCartCommand createLabelCommand)
         {
-            CreatedLabelResponse response = await Mediator.Send(createLabelCommand);
+            CreatedCartItemResponse response = await Mediator.Send(createLabelCommand);
             return Ok(response);
         }
 

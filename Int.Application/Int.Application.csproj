@@ -31,6 +31,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\CartItem\Queries\GetList\" />
+	  <Folder Include="Features\CartItem\Queries\Get\" />
 	  <Folder Include="Features\User\Queries\GetList\" />
 	  <Folder Include="Features\User\Queries\Get\" />
 	</ItemGroup>
