@@ -1,5 +1,4 @@
-﻿using Core.Application.Requests;
-using Core.Application.Responses;
+﻿using Core.Application.Responses;
 using Int.Application.Features.Commands;
 using Int.Application.Features.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +30,13 @@ namespace Int.WepApi.Controllers
 
         #region [ GET ]
 
+        [Route("Current/User/CartItem")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllCartItemsByUser([FromBody] GetListCartItemQuery query)
+        {
+            GetListResponse<GetListCartItemsListItemDto> response = await Mediator.Send(query);
+            return Ok(response);
+        }
 
         #endregion
     }
