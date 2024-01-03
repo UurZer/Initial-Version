@@ -16,14 +16,15 @@ public static class PersistenceServiceRegistration
     {
         services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("InitialDb")));
 
+        services.AddScoped<ICartItemRepository, CartItemRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ILabelRepository, LabelRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
-
+        services.AddScoped<ICartRepository, CartRepository>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
-
         services.AddScoped<ITokenHelper, JwtHelper>();
+
         return services;
     }
 }

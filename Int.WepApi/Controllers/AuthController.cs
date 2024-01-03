@@ -11,6 +11,7 @@ namespace WebAPI.Controllers
     {
         #region [ POST ]
 
+        [AllowAnonymous]
         [HttpPost("Auth/Login")]
         public async Task<IActionResult> Login([FromBody] UserLoginCommand userLoginCommand)
         {

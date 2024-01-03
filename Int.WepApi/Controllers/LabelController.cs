@@ -14,9 +14,9 @@ namespace Int.WepApi.Controllers
 
         [Route("Create/Label")]
         [HttpPost]
-        public async Task<IActionResult> CreateLabel([FromBody] CreateCartCommand createLabelCommand)
+        public async Task<IActionResult> CreateLabel([FromBody] CreateLabelCommand createLabelCommand)
         {
-            CreatedCartItemResponse response = await Mediator.Send(createLabelCommand);
+            CreatedLabelResponse response = await Mediator.Send(createLabelCommand);
             return Ok(response);
         }
 

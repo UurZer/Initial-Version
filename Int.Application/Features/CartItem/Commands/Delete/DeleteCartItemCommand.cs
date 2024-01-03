@@ -9,23 +9,23 @@ public class DeleteCartItemCommand : IRequest<DeletedCartItemResponse>
 {
     public Guid Id { get; set; }
 
-    public class DeleteLabelCommandHandler : IRequestHandler<DeleteCartItemCommand, DeletedCartItemResponse>
+    public class DeleteCartItemCommandHandler : IRequestHandler<DeleteCartItemCommand, DeletedCartItemResponse>
     {
-        private readonly ILabelRepository _labelRepository;
+        private readonly ICartItemRepository _cartItemRepository;
         private readonly IMapper _mapper;
 
-        public DeleteLabelCommandHandler(ILabelRepository labelRepository, IMapper mapper)
+        public DeleteCartItemCommandHandler(ICartItemRepository cartItemRepository, IMapper mapper)
         {
-            _labelRepository = labelRepository;
+            _cartItemRepository = cartItemRepository;
             _mapper = mapper;
         }
         public async Task<DeletedCartItemResponse> Handle(DeleteCartItemCommand request, CancellationToken cancellationToken)
         {
-            Label? label = await _labelRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
+            CartItem? cartItem= await _cartItemRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
 
-            await _labelRepository.DeleteAsync(label);
+            await _cartItemRepository.DeleteAsync(cartItem);
 
-            DeletedCartItemResponse response = _mapper.Map<DeletedCartItemResponse>(label);
+            DeletedCartItemResponse response = _mapper.Map<DeletedCartItemResponse>(cartItem);
 
             return response;
         }

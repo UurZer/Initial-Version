@@ -13,9 +13,17 @@ namespace Int.WepApi.Controllers
 
         [Route("Create/CartItem")]
         [HttpPost]
-        public async Task<IActionResult> CreateLabel([FromBody] CreateCartItemCommand createLabelCommand)
+        public async Task<IActionResult> CreateCartItem([FromBody] CreateCartItemCommand command)
         {
-            CreatedCartItemResponse response = await Mediator.Send(createLabelCommand);
+            List<CreatedCartItemResponse> response = await Mediator.Send(command);
+            return Ok(response);
+        }
+
+        [Route("Delete/CartItem")]
+        [HttpDelete]
+        public async Task<IActionResult> CreateCartItem([FromQuery] DeleteCartItemCommand command)
+        {
+            DeletedCartItemResponse response = await Mediator.Send(command);
             return Ok(response);
         }
 
@@ -23,34 +31,6 @@ namespace Int.WepApi.Controllers
 
         #region [ GET ]
 
-        [Route("Label/{ParentId}/{Id}")]
-        [HttpGet]
-        public async Task<IActionResult> GetLabelByIds(Guid parentId, Guid id)
-        {
-            GetLabelById getLabelByCode = new()
-            {
-                ParentId = parentId,
-                Id = id
-            };
-
-            LabelResponse response = await Mediator.Send(getLabelByCode);
-            return Ok(response);
-        }
-
-        [Route("Labels/{LabelUType}/{Level}")]
-        [HttpGet]
-        public async Task<IActionResult> GetAllLabelByLevel([FromBody] PageRequest pageRequest, string labelUType, int level)
-        {
-            GetListLabelQuery getByIdLabelQuery = new()
-            {
-                PageRequest = pageRequest,
-                LabelUType = labelUType,
-                Level = level
-            };
-
-            GetListResponse<GetListLabelListItemDto> response = await Mediator.Send(getByIdLabelQuery);
-            return Ok(response);
-        }
 
         #endregion
     }

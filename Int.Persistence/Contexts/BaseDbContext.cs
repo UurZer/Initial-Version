@@ -10,11 +10,14 @@ public class BaseDbContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
 
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Label> Labels { get; set; }
-    public DbSet<User> Users { get; set; }
-    public DbSet<OperationClaim> OperationClaims { get; set; }
-    public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+    public DbSet<UserOperationClaim> UserOperationClaim { get; set; }
+    public DbSet<OrderTransaction> OrderTransaction { get; set; }
+    public DbSet<OperationClaim> OperationClaim { get; set; }
+    public DbSet<CartItem> CartItem { get; set; }
+    public DbSet<Product> Product { get; set; }
+    public DbSet<Label> Label { get; set; }
+    public DbSet<User> User { get; set; }
+    public DbSet<Cart> Cart { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
     {

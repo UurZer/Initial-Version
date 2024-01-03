@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using Core.Application.Pipelines.Transaction;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Int.Application.Features.Rules;
 using Int.Application.Services.Repositories;
 using Int.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Int.Application.Features.Commands;
-public class CreateCartItemCommand : IRequest<CreatedCartItemResponse>, ITransactionalRequest
+public class CreateCartItemCommand : IRequest<List<CreatedCartItemResponse>>, ITransactionalRequest
 {
     #region [ Model ]
     public List<CartItem> CartItems { get; set; }
@@ -17,7 +19,7 @@ public class CreateCartItemCommand : IRequest<CreatedCartItemResponse>, ITransac
 
     #endregion
 
-    public class CreateCartItemCommandHandler : IRequestHandler<CreateCartItemCommand, CreatedCartItemResponse>
+    public class CreateCartItemCommandHandler : IRequestHandler<CreateCartItemCommand, List<CreatedCartItemResponse>>
     {
         private readonly ICartItemRepository _cartItemRepository;
         private readonly ICartRepository _cartRepository;
@@ -30,11 +32,13 @@ public class CreateCartItemCommand : IRequest<CreatedCartItemResponse>, ITransac
             _mapper = mapper;
         }
 
-        public async Task<CreatedCartItemResponse> Handle(CreateCartItemCommand request, CancellationToken cancellationToken)
+        public async Task<List<CreatedCartItemResponse>> Handle(CreateCartItemCommand request, CancellationToken cancellationToken)
         {
+            List<CartItem> cartItems = _mapper.Map<List<CartItem>>(request.CartItems);
             Paginate<CartItem> currentCartItems = new Paginate<CartItem>();
-            CartItem cartItem = _mapper.Map<CartItem>(request);
+            CartItem cartItem;
             Cart cart;
+
 
             #region [ Cart ]
 
@@ -45,22 +49,24 @@ public class CreateCartItemCommand : IRequest<CreatedCartItemResponse>, ITransac
                     Id = Guid.NewGuid(),
                     UserId = request.UserId
                 };
+
+                await _cartRepository.AddAsync(cart);
             }
             else
             {
-                cart = _cartRepository.Get(x => x.Id == request.CartId);
+                cart = await _cartRepository.GetAsync(x => x.Id == request.CartId);
 
-                if(cart == null)
+                if (cart == null)
                 {
                     cart = new Cart
                     {
                         Id = Guid.NewGuid(),
                         UserId = request.UserId
                     };
+
+                    await _cartRepository.AddAsync(cart);
                 }
             }
-
-            await _cartRepository.AddAsync(cart);
 
             #endregion
 
@@ -68,25 +74,57 @@ public class CreateCartItemCommand : IRequest<CreatedCartItemResponse>, ITransac
 
             if (!request.CartId.HasValue)
             {
-                cartItem.CartId = cart.Id;
+                List<CartItem> myCartItems = new List<CartItem>();
+                foreach (CartItem item in cartItems)
+                {
+                    var myCartİtem = myCartItems.Where(x => x.ProductId == item.ProductId).FirstOrDefault();
+                    if (myCartİtem != null)
+                    {
+                        myCartItems.Remove(myCartİtem);
+                        myCartİtem.Quantity += item.Quantity;
+                        myCartItems.Add(myCartİtem);
+                    }
+                    else
+                    {
+                        item.CartId = cart.Id;
+                        item.Id = Guid.NewGuid();
+                        myCartItems.Add(item);
+                    }
+                }
+                await _cartItemRepository.AddRangeAsync(myCartItems);
             }
             else
             {
-                currentCartItems = _cartItemRepository.GetList(x => x.CartId == request.CartId);
+                currentCartItems = await _cartItemRepository.GetListAsync(x => x.CartId == cart.Id);
 
-                if(currentCartItems != null && currentCartItems.Count != 0) 
+                if (currentCartItems != null && currentCartItems.Count != 0)
                 {
                     List<CartItem> deletedCartItems = _mapper.Map<List<CartItem>>(currentCartItems.Items);
                     await _cartItemRepository.DeleteAsync(deletedCartItems);
                 }
+                List<CartItem> myCartItems = new List<CartItem>();
+                foreach (CartItem item in cartItems)
+                {
+                    var myCartİtem = myCartItems.Where(x => x.ProductId == item.ProductId).FirstOrDefault();
+                    if (myCartİtem != null)
+                    {
+                        myCartItems.Remove(myCartİtem);
+                        myCartİtem.Quantity += item.Quantity;
+                        myCartItems.Add(myCartİtem);
+                    }
+                    else
+                    {
+                        item.CartId = cart.Id;
+                        item.Id = Guid.NewGuid();
+                        myCartItems.Add(item);
+                    }
+                }
+                await _cartItemRepository.AddRangeAsync(myCartItems);
             }
-
-            await _cartItemRepository.AddAsync(cartItem);
 
             #endregion
 
-
-            CreatedCartItemResponse createdCartItemResponse = _mapper.Map<CreatedCartItemResponse>(cartItem);
+            List<CreatedCartItemResponse> createdCartItemResponse = _mapper.Map<List<CreatedCartItemResponse>>(cartItems);
             return createdCartItemResponse;
         }
     }

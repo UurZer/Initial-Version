@@ -18,8 +18,8 @@ public class UserRepository : EfRepositoryBase<User, Guid, BaseDbContext>, IUser
 
     public Task<List<OperationClaim>> GetClaimsAsync(Guid userId)
     {
-        var result = from operationClaim in _context.OperationClaims
-                     join userOperationClaim in _context.UserOperationClaims
+        var result = from operationClaim in _context.OperationClaim
+                     join userOperationClaim in _context.UserOperationClaim
                          on operationClaim.Id equals userOperationClaim.OperationClaimId
                      where userOperationClaim.UserId == userId
                      select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
