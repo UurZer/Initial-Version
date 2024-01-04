@@ -1,29 +1,24 @@
-﻿using Core.Persistence.Repositories;
+﻿namespace Int.Application.Features.Queries;
 
-namespace Int.Domain.Entities;
-
-public class OrderTransaction : Entity<Guid>
+public class GetByIdOrderTransactionResponse
 {
     public Guid OrderGroupId { get; set; }
 
     public Guid UserId { get; set; }
 
+    public string UserFullName { get; set; }
+
     public Guid ProductId { get; set; }
+
+    public string ProductName { get; set; }
+
+    public string ProductDescription { get; set; }
 
     public decimal TotalAmount { get; set; }
 
     public decimal TotalQuantity { get; set; }
-    
+
     public DateTime TransactionTime { get; set; }
 
     public string Status { get; set; }
-
-    #region [ Navigation Property ]
-
-    public User User { get; set; }
-
-    public Product Product { get; set; }
-
-    #endregion
-
 }

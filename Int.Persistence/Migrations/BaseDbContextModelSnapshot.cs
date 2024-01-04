@@ -48,9 +48,6 @@ namespace Int.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex(new[] { "CreatedDate" }, "UK_Created_Date")
-                        .IsUnique();
-
                     b.ToTable("Cart");
                 });
 
@@ -87,9 +84,6 @@ namespace Int.Persistence.Migrations
                     b.HasIndex("CartId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex(new[] { "CreatedDate" }, "UK_Created_Date")
-                        .IsUnique();
 
                     b.ToTable("CartItem");
                 });
@@ -178,6 +172,9 @@ namespace Int.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletedDate");
 
+                    b.Property<Guid>("OrderGroupId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
@@ -205,9 +202,6 @@ namespace Int.Persistence.Migrations
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex(new[] { "CreatedDate" }, "UK_Created_Date")
-                        .IsUnique();
 
                     b.ToTable("OrderTransaction");
                 });
