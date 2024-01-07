@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Application.Requests;
 using Core.Application.Responses;
+using Core.Persistence.Context;
 using Core.Persistence.Dynamic;
 using Core.Persistence.Paging;
 using Int.Application.Services.Repositories;
@@ -10,25 +11,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Int.Application.Features.Queries;
 
-public class GetListDynamicProductQuery : IRequest<GetListResponse<GetListProductListItemDto>>
+public class GetListProductByLabelQuery : IRequest<GetListResponse<GetListProductListItemDto>>
 {
     public PageRequest PageRequest { get; set; }
     public DynamicQuery DynamicQuery { get; set; }
 
+    public GetListProductByLabelQuery()
+    {
+        PageRequest = new PageRequest();
+        DynamicQuery = CoreContext.Current.DynamicQuery;
+    }
+
     public Guid LabelId { get; set; }
 
-    public class GetListProductQueryHandler : IRequestHandler<GetListDynamicProductQuery, GetListResponse<GetListProductListItemDto>>
+    public class GetListDynamicProductQueryHandler : IRequestHandler<GetListProductByLabelQuery, GetListResponse<GetListProductListItemDto>>
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-        public GetListProductQueryHandler(IProductRepository productRepository, IMapper mapper)
+        public GetListDynamicProductQueryHandler(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListProductListItemDto>> Handle(GetListDynamicProductQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListProductListItemDto>> Handle(GetListProductByLabelQuery request, CancellationToken cancellationToken)
         {
             Paginate<Product> products = await _productRepository.GetListByDynamicAsync(
                  request.DynamicQuery,

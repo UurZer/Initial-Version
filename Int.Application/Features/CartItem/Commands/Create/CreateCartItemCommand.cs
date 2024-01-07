@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Core.Application.Pipelines.Transaction;
-using Core.Application.Responses;
 using Core.Persistence.Paging;
-using Int.Application.Features.Rules;
 using Int.Application.Services.Repositories;
 using Int.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Int.Application.Features.Commands;
 public class CreateCartItemCommand : IRequest<List<CreatedCartItemResponse>>, ITransactionalRequest
@@ -36,6 +33,7 @@ public class CreateCartItemCommand : IRequest<List<CreatedCartItemResponse>>, IT
         {
             List<CartItem> cartItems = _mapper.Map<List<CartItem>>(request.CartItems);
             Paginate<CartItem> currentCartItems = new Paginate<CartItem>();
+            Paginate<Cart> currentCarts = new Paginate<Cart>();
             CartItem cartItem;
             Cart cart;
 
@@ -51,6 +49,10 @@ public class CreateCartItemCommand : IRequest<List<CreatedCartItemResponse>>, IT
                 };
 
                 await _cartRepository.AddAsync(cart);
+                currentCarts = await _cartRepository.GetListAsync(predicate: x => x.UserId == request.UserId
+                                                                              && x.Id != cart.Id,
+                                                                cancellationToken: cancellationToken);
+                await _cartRepository.DeleteAsync(currentCarts.Items.ToList());
             }
             else
             {

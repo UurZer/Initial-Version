@@ -13,6 +13,11 @@ public class GetListCartItemQuery : IRequest<GetListResponse<GetListCartItemsLis
 {
     public PageRequest PageRequest { get; set; }
 
+    public GetListCartItemQuery()
+    {
+        PageRequest = new PageRequest();
+    }
+
     public Guid UserId { get; set; }
     public class GetListCartItemQueryHandler : IRequestHandler<GetListCartItemQuery, GetListResponse<GetListCartItemsListItemDto>>
     {
@@ -28,12 +33,12 @@ public class GetListCartItemQuery : IRequest<GetListResponse<GetListCartItemsLis
         public async Task<GetListResponse<GetListCartItemsListItemDto>> Handle(GetListCartItemQuery request, CancellationToken cancellationToken)
         {
             Paginate<CartItem> models = await _cartItemRepository.GetListAsync(
-                 include : x => x.Include(x => x.Cart).Include(x => x.Product),
+                 include : x => x.Include(x => x.Cart).Include(x => x.Product).Include(x => x.Cart.User),
                  predicate : x => x.Cart.UserId == request.UserId,
                  index: request.PageRequest.PageIndex,
                  size: request.PageRequest.PageSize,
                  cancellationToken: cancellationToken,
-                 withDeleted: true
+                 withDeleted: false
                  );
 
             GetListResponse<GetListCartItemsListItemDto> response = _mapper.Map<GetListResponse<GetListCartItemsListItemDto>>(models);

@@ -25,6 +25,6 @@ public class ProductMappingProfiles : Profile
         CreateMap<Product, GetByIdProductResponse>().ReverseMap();
         CreateMap<Paginate<Product>, GetListResponse<GetListProductListItemDto>>().ReverseMap();
 
-        
+
     }
 }

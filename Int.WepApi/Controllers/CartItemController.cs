@@ -32,9 +32,9 @@ namespace Int.WepApi.Controllers
 
         [Route("Current/User/CartItem")]
         [HttpGet]
-        public async Task<IActionResult> GetAllCartItemsByUser([FromBody] GetListCartItemQuery query)
+        public async Task<IActionResult> GetAllCartItemsByUser([FromQuery] GetListCartItemQuery cartQuery)
         {
-            GetListResponse<GetListCartItemsListItemDto> response = await Mediator.Send(query);
+            GetListResponse<GetListCartItemsListItemDto> response = await Mediator.Send(cartQuery);
             return Ok(response);
         }
 

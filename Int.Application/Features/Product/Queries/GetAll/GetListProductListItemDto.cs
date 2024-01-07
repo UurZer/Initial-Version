@@ -1,12 +1,12 @@
-﻿using Core.Persistence.Repositories;
+﻿namespace Int.Application.Features.Queries;
 
-namespace Int.Domain.Entities;
-
-public class Product : Entity<Guid>
+public class GetListProductListItemDto
 {
-    public Guid LabelId { get; set; }
+    public Guid Id { get; set; }
 
     public string LabelCode { get; set; }
+
+    public string LabelName { get; set; }
 
     public string BrandCode { get; set; }
 
@@ -31,10 +31,4 @@ public class Product : Entity<Guid>
     public decimal StockQuantity { get; set; } = 0;
 
     public string ImageUrl { get; set; }
-
-    #region [ Navigation Property ]
-
-    public ICollection<Label> Labels { get; set; }
-
-    #endregion
 }

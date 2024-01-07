@@ -40,11 +40,11 @@ namespace Int.WepApi.Controllers
 
         [Route("Labels/{LabelUType}/{Level}")]
         [HttpGet]
-        public async Task<IActionResult> GetAllLabelByLevel([FromBody] PageRequest pageRequest, string labelUType, int level)
+        public async Task<IActionResult> GetAllLabelByLevel([FromRoute] string labelUType, int level)
         {
             GetListLabelQuery getByIdLabelQuery = new()
             {
-                PageRequest = pageRequest,
+                PageRequest = new PageRequest(),
                 LabelUType = labelUType,
                 Level = level
             };
@@ -54,7 +54,5 @@ namespace Int.WepApi.Controllers
         }
 
         #endregion
-
-
     }
 }
