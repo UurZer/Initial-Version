@@ -18,6 +18,7 @@ public class BaseDbContext : DbContext
     public DbSet<Label> Label { get; set; }
     public DbSet<User> User { get; set; }
     public DbSet<Cart> Cart { get; set; }
+    public DbSet<Address> Address { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
     {

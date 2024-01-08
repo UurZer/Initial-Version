@@ -10,7 +10,25 @@ public class CreateProductCommand : IRequest<CreatedProductResponse>, ITransacti
 {
     #region [ Model ]
 
+    public Guid LabelId { get; set; }
+
+    public string LabelCode { get; set; }
+
+    public string BrandCode { get; set; }
+
+    public string BrandName { get; set; }
+
     public string Code { get; set; }
+
+    public string Gender { get; set; }
+
+    public string Rating { get; set; }
+
+    public string Offer { get; set; }
+
+    public decimal OfferUnitPrice { get; set; }
+
+    public string Size { get; set; }
 
     public string Name { get; set; }
 
@@ -18,11 +36,9 @@ public class CreateProductCommand : IRequest<CreatedProductResponse>, ITransacti
 
     public decimal UnitPrice { get; set; }
 
-    public string? ImageUrl { get; set; }
+    public decimal StockQuantity { get; set; } = 0;
 
-    public string? LabelId { get; set; }
-
-    public string LabelCode { get; set; }
+    public string ImageUrl { get; set; }
 
     #endregion
 

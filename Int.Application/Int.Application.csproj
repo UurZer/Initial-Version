@@ -31,6 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\Address\Queries\Get\" />
 	  <Folder Include="Features\CartItem\Queries\Get\" />
 	  <Folder Include="Features\OrderTransaction\Queries\Get\" />
 	</ItemGroup>

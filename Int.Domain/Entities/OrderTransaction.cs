@@ -10,6 +10,8 @@ public class OrderTransaction : Entity<Guid>
 
     public Guid ProductId { get; set; }
 
+    public Guid AddressId { get; set; }
+
     public decimal TotalAmount { get; set; }
 
     public decimal TotalQuantity { get; set; }
@@ -23,6 +25,8 @@ public class OrderTransaction : Entity<Guid>
     public User User { get; set; }
 
     public Product Product { get; set; }
+
+    public Address Address { get; set; }
 
     #endregion
 

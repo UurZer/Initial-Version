@@ -18,10 +18,12 @@ public class OrderTransactionConfiguration : BaseEntityConfiguration<OrderTransa
         builder.Property(b => b.TransactionTime).HasColumnName("TransactionTime");
         builder.Property(b => b.TotalAmount).HasColumnName("TotalAmount");
         builder.Property(b => b.TotalQuantity).HasColumnName("TotalQuantity");
+        builder.Property(b => b.AddressId).HasColumnName("AddressId");
 
         base.Configure(builder);
 
         builder.HasOne("Product");
         builder.HasOne("Cart");
+        builder.HasOne("Address");
     }
 }

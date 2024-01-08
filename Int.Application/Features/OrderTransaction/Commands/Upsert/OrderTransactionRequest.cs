@@ -8,6 +8,8 @@
 
         public Guid ProductId { get; set; }
 
+        public Guid AddressId { get; set; }
+
         public decimal TotalAmount { get; set; }
 
         public decimal TotalQuantity { get; set; }

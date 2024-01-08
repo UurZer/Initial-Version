@@ -24,6 +24,8 @@ public class Product : Entity<Guid>
 
     public string Name { get; set; }
 
+    public string Size { get; set; }
+
     public string Description { get; set; }
 
     public decimal UnitPrice { get; set; }
