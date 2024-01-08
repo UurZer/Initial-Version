@@ -26,8 +26,6 @@ public class OrderTransaction : Entity<Guid>
 
     public Product Product { get; set; }
 
-    public Address Address { get; set; }
-
     #endregion
 
 }

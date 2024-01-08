@@ -23,6 +23,4 @@ public class Address : Entity<Guid>
     public string State { get; set; }
 
     public string Street { get; set; }
-
-    public User User { get; set; }
 }

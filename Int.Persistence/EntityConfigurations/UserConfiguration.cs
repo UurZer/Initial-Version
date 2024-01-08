@@ -22,6 +22,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(b => b.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(b => b.DeletedDate).HasColumnName("DeletedDate");
 
+        builder.HasMany(b => b.Address);
         builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
     }
 }
