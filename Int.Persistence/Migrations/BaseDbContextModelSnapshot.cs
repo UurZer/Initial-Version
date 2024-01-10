@@ -321,8 +321,8 @@ namespace Int.Persistence.Migrations
                     b.Property<decimal>("OfferUnitPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Rating")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Rating")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");

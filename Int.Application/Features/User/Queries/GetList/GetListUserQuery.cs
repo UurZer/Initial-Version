@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using Core.Application.Requests;
 using Core.Application.Responses;
-using Core.Persistence.Auth;
 using Core.Persistence.Paging;
 using Int.Domain.Entities;
 using Int.Identity.Repository.Service;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Int.Application.Features.Queries;
 

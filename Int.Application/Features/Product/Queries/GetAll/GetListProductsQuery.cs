@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Context;
@@ -11,15 +12,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Int.Application.Features.Queries;
 
-public class GetListProductsQuery : IRequest<GetListResponse<GetListProductListItemDto>>
+public class GetListProductsQuery : IRequest<GetListResponse<GetListProductListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
     public DynamicQuery DynamicQuery { get; set; }
 
+    public bool BypassCache { get; }
+    public string CacheKey => $"GetListProducts";
+    public string CacheGroupKey => $"GetListProducts";
+    public TimeSpan? SlidingExpiration { get; }
+
     public GetListProductsQuery()
     {
-       PageRequest = new PageRequest();
-       DynamicQuery = CoreContext.Current.DynamicQuery;
+        PageRequest = new PageRequest();
+        DynamicQuery = CoreContext.Current.DynamicQuery;
     }
     public class GetListProductsQueryHandler : IRequestHandler<GetListProductsQuery, GetListResponse<GetListProductListItemDto>>
     {

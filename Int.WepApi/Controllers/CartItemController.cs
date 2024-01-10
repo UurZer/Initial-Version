@@ -18,6 +18,14 @@ namespace Int.WepApi.Controllers
             return Ok(response);
         }
 
+        [Route("Update/CartItem")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCartItem([FromBody] UpdateCartItemCommand command)
+        {
+            UpdatedCartItemResponse response = await Mediator.Send(command);
+            return Ok(response);
+        }     
+        
         [Route("Delete/CartItem")]
         [HttpDelete]
         public async Task<IActionResult> CreateCartItem([FromQuery] DeleteCartItemCommand command)

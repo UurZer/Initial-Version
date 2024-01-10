@@ -17,6 +17,9 @@ public class CartItemMappingProfiles : Profile
         CreateMap<CartItem, DeleteCartItemCommand>().ReverseMap();
         CreateMap<CartItem, DeletedCartItemResponse>().ReverseMap();
 
+        CreateMap<CartItem, UpdateCartItemCommand>().ReverseMap();
+        CreateMap<CartItem, UpdatedCartItemResponse>().ReverseMap();
+
         CreateMap<User, GetListCartItemsListItemDto>().ReverseMap();
         CreateMap<CartItem, GetListCartItemsListItemDto>().ReverseMap();
         CreateMap<Paginate<CartItem>, GetListResponse<GetListCartItemsListItemDto>>().ReverseMap();

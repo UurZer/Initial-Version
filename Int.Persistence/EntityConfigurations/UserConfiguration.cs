@@ -1,4 +1,5 @@
 ﻿using Int.Domain.Entities;
+using Int.Utilities.Security.Hashing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,5 +25,31 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasMany(b => b.Address);
         builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
+        builder.HasData(GetUserSeed());
+    }
+
+    private HashSet<User> GetUserSeed()
+    {
+        HashingHelper.CreatePasswordHash(
+            "serdar.biroglu",
+            out byte[] hash,
+            out byte[] salt
+            );
+
+        HashSet<User> result = new HashSet<User> {
+            new()
+            {
+                Id= Guid.Parse("929FD82B-4556-498F-AED5-424AE312B9AE"),
+                FirstName = "Serdar",
+                LastName = "Biroğlu",
+                FullName = "Serdar Biroğlu",
+                Email = "serdar.biroglu@info.com",
+                PasswordHash = hash,
+                PasswordSalt = salt,
+                Status = true,
+            }
+        };
+
+        return result;
     }
 }

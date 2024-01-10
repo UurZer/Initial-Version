@@ -22,6 +22,8 @@ public class GetListCartItemsListItemDto
 
     public string ProductOffer { get; set; }
 
+    public string ProductSize { get; set; }
+
     public decimal ProductOfferUnitPrice { get; set; }
 
     public string ProductName { get; set; }

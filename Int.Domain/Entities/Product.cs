@@ -16,7 +16,7 @@ public class Product : Entity<Guid>
 
     public string Gender { get; set; }
 
-    public string Rating { get; set; }
+    public decimal Rating { get; set; }
 
     public string Offer { get; set; }
 

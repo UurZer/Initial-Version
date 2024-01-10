@@ -16,7 +16,7 @@ public class GetListProductListItemDto
 
     public string Gender { get; set; }
 
-    public string Rating { get; set; }
+    public decimal Rating { get; set; }
 
     public string Offer { get; set; }
 
@@ -27,6 +27,8 @@ public class GetListProductListItemDto
     public string Description { get; set; }
 
     public decimal UnitPrice { get; set; }
+
+    public string Size { get; set; }
 
     public decimal StockQuantity { get; set; } = 0;
 

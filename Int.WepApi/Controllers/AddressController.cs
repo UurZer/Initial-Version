@@ -37,19 +37,6 @@ namespace Int.WepApi.Controllers
             return Ok(response);
         }
 
-        //[Route("Address/{addressId}")]
-        //[HttpGet]
-        //public async Task<IActionResult> GetAddressById(Guid addressId)
-        //{
-        //    GetByIdAddressQuery addressQuery = new() { Id = addressId };
-
-        //    GetByIdAddressResponse response = await Mediator.Send(addressQuery);
-
-        //    return Ok(response);
-        //}
-
         #endregion
-
-
     }
 }
